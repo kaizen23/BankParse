@@ -1,0 +1,6 @@
+C:\Users\neura\Documents\Visual Studio 2015\Projects\Bilo_Monitor\ParseString\BankParse\BankParse\bin\Debug\BankParse.exe.config
+C:\Users\neura\Documents\Visual Studio 2015\Projects\Bilo_Monitor\ParseString\BankParse\BankParse\bin\Debug\BankParse.exe
+C:\Users\neura\Documents\Visual Studio 2015\Projects\Bilo_Monitor\ParseString\BankParse\BankParse\bin\Debug\BankParse.pdb
+C:\Users\neura\Documents\Visual Studio 2015\Projects\Bilo_Monitor\ParseString\BankParse\BankParse\obj\Debug\BankParse.csprojResolveAssemblyReference.cache
+C:\Users\neura\Documents\Visual Studio 2015\Projects\Bilo_Monitor\ParseString\BankParse\BankParse\obj\Debug\BankParse.exe
+C:\Users\neura\Documents\Visual Studio 2015\Projects\Bilo_Monitor\ParseString\BankParse\BankParse\obj\Debug\BankParse.pdb
