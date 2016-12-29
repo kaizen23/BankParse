@@ -35,28 +35,50 @@ namespace BankParse
             return list;
         }
 
-        public IEnumerable SelectNameSortCode(List<string> AllLines)
+        //public List<Bank> SelectNameSortCode(List<string> AllLines)
+        //{
+        //    var items = (from c in (
+        //                 from item in AllLines
+        //                 let columns = item.Split('\t')
+
+        //                    select new Bank
+        //                    {
+
+        //                        SortCodes = columns[3].Trim(),
+        //                        Name = columns[5].Trim()
+
+        //                    }
+
+        //                           )
+        //                select c).ToList();
+
+        //    return items;
+        //}
+
+        public RootBank SelectNameSortCode(List<string> AllLines)
         {
-            var items = from c in (
+            var rootbank = new RootBank();
+            rootbank.Banks = (from c in (
                          from item in AllLines
-                           let columns = item.Split('\t')
-                           select new { Bank = new{
-                                               SortCodes = columns[3].Trim(),
-                                               Name = columns[5].Trim()
-                                                  }
-                                      }
-                                   )
-                        select c;
+                         let columns = item.Split('\t')
+                         select new Bank
+                         {
+                                SortCodes = columns[3].Trim(),
+                                Name = columns[5].Trim()
+    
+                        }
+                        )          
+                        select c).ToList();
 
-            return items;
+            return rootbank;
         }
 
-        public string ConvertToJson(IEnumerable NameSortCode)
-        {
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            string json = jss.Serialize(NameSortCode);
+        //public string ConvertToJson(IEnumerable NameSortCode)
+        //{
+        //    JavaScriptSerializer jss = new JavaScriptSerializer();
+        //    string json = jss.Serialize(NameSortCode);
 
-            return json;
-        }
+        //    return json;
+        //}
     }
 }

@@ -4,3 +4,5 @@ C:\Users\neura\Documents\Visual Studio 2015\Projects\Bilo_Monitor\ParseString\Ba
 C:\Users\neura\Documents\Visual Studio 2015\Projects\Bilo_Monitor\ParseString\BankParse\BankParse\obj\Debug\BankParse.csprojResolveAssemblyReference.cache
 C:\Users\neura\Documents\Visual Studio 2015\Projects\Bilo_Monitor\ParseString\BankParse\BankParse\obj\Debug\BankParse.exe
 C:\Users\neura\Documents\Visual Studio 2015\Projects\Bilo_Monitor\ParseString\BankParse\BankParse\obj\Debug\BankParse.pdb
+C:\Users\neura\Documents\Visual Studio 2015\Projects\Bilo_Monitor\ParseString\BankParse\BankParse\bin\Debug\Newtonsoft.Json.dll
+C:\Users\neura\Documents\Visual Studio 2015\Projects\Bilo_Monitor\ParseString\BankParse\BankParse\bin\Debug\Newtonsoft.Json.xml
