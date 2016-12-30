@@ -17,16 +17,9 @@ namespace BankParse
             using (StreamReader file = File.OpenText("BanksContainer.txt"))
                 {
                     JsonSerializer serializer = new JsonSerializer();
-                    RootBank banks= (RootBank)serializer.Deserialize(file, typeof(RootBank));
-
-                    //foreach (var bank in banks.Banks)
-                    //{
-                    //Console.WriteLine(bank.Name);
-                    //Console.WriteLine(bank.SortCodes);   
-                    //}
-
+                    RootBank banks = (RootBank)serializer.Deserialize(file, typeof(RootBank));
                 return banks;
-            }
+                }
            
         }
     }

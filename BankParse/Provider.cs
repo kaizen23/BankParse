@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web.Script.Serialization;
 
 
@@ -15,14 +16,13 @@ namespace BankParse
         {
             var url = "http://www.nbp.pl/banki_w_polsce/ewidencja/dz_bank_jorg.txt";
             var client = new WebClient();
-            client.Encoding = System.Text.Encoding.GetEncoding(1250);
+            Encoding encoding = System.Text.Encoding.GetEncoding("ibm852");
+
             var list = new List<string>();
 
             using (var stream = client.OpenRead(url))
             {
-
-
-                using (var reader = new StreamReader(stream))
+                using (var reader = new StreamReader(stream,encoding))
                 {
 
                     while ((reader.ReadLine()) != null)
@@ -39,8 +39,8 @@ namespace BankParse
 
         public RootBank SelectNameSortCode(List<string> AllLines)
         {
-            var rootbank = new RootBank();
-            rootbank.Banks = (from c in (
+            var rootBank = new RootBank();
+            rootBank.Banks = (from c in (
                          from item in AllLines
                          let columns = item.Split('\t')
                          select new Bank
@@ -52,7 +52,9 @@ namespace BankParse
                              )          
                         select c).ToList();
 
-            return rootbank;
+            rootBank.Banks = rootBank.Banks.GroupBy(bank => bank.SortCodes).Select(g => g.First()).ToList();
+
+            return rootBank;
         }
     }
 }
