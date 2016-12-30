@@ -10,22 +10,32 @@ namespace BankParse
         static void Main(string[] args)
 
         {
-           
+
+
+            var ProviderBilo = new ProviderJsonBilo();
+            ProviderBilo.GetReadAllLines();
+
             var Provider = new Provider();
             var GetReadAllLines = Provider.GetReadAllLines();
-            var rootbank = new RootBank();
-            rootbank = Provider.SelectNameSortCode(GetReadAllLines);
-            
+            var rootBank = new RootBank();
+            rootBank = Provider.SelectNameSortCode(GetReadAllLines);
+            var biloBank = new RootBank();
+            biloBank = ProviderBilo.GetReadAllLines();
 
-            foreach(var Bank in rootbank.Banks)
+
+            foreach (var Bank in rootBank.Banks)
             {
                 Console.WriteLine(Bank.Name);
                 Console.WriteLine(Bank.SortCodes);
 
             }
-            //Console.WriteLine(GetReadAllLines);
-            ////var Json = Provider.ConvertToJson(Banks);
-            ////Console.WriteLine(Json);
+
+            foreach (var Bank in biloBank.Banks)
+            {
+                Console.WriteLine(Bank.Name);
+                Console.WriteLine(Bank.SortCodes);
+
+            }
             Console.ReadKey();                         
         }
     }

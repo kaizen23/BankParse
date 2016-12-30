@@ -1,0 +1,13 @@
+﻿{
+   "Banks": [
+      {
+         "Name": "Narodowy Bank Polski ",
+         "SortCodes": "1010"
+      },
+
+      {
+         "Name": "Narodowy Bank Polski ",
+         "SortCodes": "1010"
+      }
+   ]
+}
