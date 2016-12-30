@@ -15,6 +15,7 @@ namespace BankParse
         {
             var url = "http://www.nbp.pl/banki_w_polsce/ewidencja/dz_bank_jorg.txt";
             var client = new WebClient();
+            client.Encoding = System.Text.Encoding.GetEncoding(1250);
             var list = new List<string>();
 
             using (var stream = client.OpenRead(url))
@@ -53,13 +54,5 @@ namespace BankParse
 
             return rootbank;
         }
-
-        //public string ConvertToJson(IEnumerable NameSortCode)
-        //{
-        //    JavaScriptSerializer jss = new JavaScriptSerializer();
-        //    string json = jss.Serialize(NameSortCode);
-
-        //    return json;
-        //}
     }
 }
