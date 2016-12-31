@@ -28,15 +28,11 @@ namespace BankParse
             foreach (var Bank in rootBank.Banks)
             {
                 Console.WriteLine(Bank.Name);
-                Console.WriteLine(Bank.SortCodes);
 
             }
-
-            //foreach (var Bank in biloBank.Banks)
+            //foreach (var bilobank2 in biloBank.Banks)
             //{
-            //    Console.WriteLine(Bank.Name);
-            //    Console.WriteLine(Bank.SortCodes);
-
+            //    Console.WriteLine(bilobank2.Name);
             //}
             Console.ReadKey();                         
         }

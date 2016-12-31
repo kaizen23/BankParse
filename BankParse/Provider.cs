@@ -12,11 +12,13 @@ namespace BankParse
 {
     class Provider
     {
+        private string readLine;
+
         public List<String> GetReadAllLines()
         {
             var url = "http://www.nbp.pl/banki_w_polsce/ewidencja/dz_bank_jorg.txt";
             var client = new WebClient();
-            Encoding encoding = System.Text.Encoding.GetEncoding("ibm852");
+            Encoding encoding = Encoding.GetEncoding("ibm852");
 
             var list = new List<string>();
 
@@ -25,9 +27,12 @@ namespace BankParse
                 using (var reader = new StreamReader(stream,encoding))
                 {
 
-                    while ((reader.ReadLine()) != null)
+                    while ((( readLine = reader.ReadLine())) != null)
+                    
                     {
-                        list.Add(reader.ReadLine());
+                        //list.Add(reader.ReadLine());
+                        list.Add(readLine);
+
 
                     }
                 }
@@ -46,13 +51,17 @@ namespace BankParse
                          select new Bank
                          {
                                 SortCodes = columns[3].Trim(),
-                                Name = columns[5].Trim()
+                                Name = columns[1].Trim()
     
                          }
                              )          
                         select c).ToList();
 
-            rootBank.Banks = rootBank.Banks.GroupBy(bank => bank.SortCodes).Select(g => g.First()).ToList();
+            rootBank.Banks = rootBank.Banks.Where(c => !c.Name.Contains("likw"))
+                                           .Where(c => !c.Name.Contains("upadł"))
+                                           .GroupBy(bank => bank.SortCodes)
+                                           .Select(g => g.First())
+                                           .ToList();
 
             return rootBank;
         }
