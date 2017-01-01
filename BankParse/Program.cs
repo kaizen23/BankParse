@@ -25,20 +25,24 @@ namespace BankParse
 
 
             IEnumerable<Bank> except =biloBank.Banks.Except(rootBank.Banks, new RootBiloComparer());
-
+            var x = 0;
             foreach (var bank in except)
-                Console.WriteLine(bank.Name + " " + bank.SortCodes);
+            {
+                Console.WriteLine(bank.Name + "," + bank.SortCodes);
+                x++;
+            }
+            Console.WriteLine(x);
 
 
-            //foreach (var Bank in rootBank.Banks)
-            //{
-            //    Console.WriteLine(Bank.Name);
+            IEnumerable<Bank> except2 = rootBank.Banks.Except(biloBank.Banks, new RootBiloComparer());
+            var i = 0;
+            foreach (var bank in except2)
+            {
+                i++;
+                Console.WriteLine(bank.Name + "," + bank.SortCodes);
+            }
+            Console.WriteLine(i);
 
-            //}
-            //foreach (var bilobank2 in biloBank.Banks)
-            //{
-            //    Console.WriteLine(bilobank2.Name);
-            //}
             Console.ReadKey();                         
         }
     }

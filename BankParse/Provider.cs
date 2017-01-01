@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Web.Script.Serialization;
 
 
 namespace BankParse
@@ -30,10 +28,7 @@ namespace BankParse
                     while ((( readLine = reader.ReadLine())) != null)
                     
                     {
-                        //list.Add(reader.ReadLine());
                         list.Add(readLine);
-
-
                     }
                 }
             }
@@ -50,7 +45,7 @@ namespace BankParse
                          let columns = item.Split('\t')
                          select new Bank
                          {
-                                SortCodes = columns[3].Trim(),
+                                SortCodes = columns[3].Trim().PadRight(4, '0'),
                                 Name = columns[1].Trim()
     
                          }
