@@ -1,6 +1,6 @@
 ﻿using System;
-
-
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BankParse
 {
@@ -24,11 +24,17 @@ namespace BankParse
             biloBank = ProviderBilo.GetReadAllLines();
 
 
-            foreach (var Bank in rootBank.Banks)
-            {
-                Console.WriteLine(Bank.Name);
+            IEnumerable<Bank> except =biloBank.Banks.Except(rootBank.Banks, new RootBiloComparer());
 
-            }
+            foreach (var bank in except)
+                Console.WriteLine(bank.Name + " " + bank.SortCodes);
+
+
+            //foreach (var Bank in rootBank.Banks)
+            //{
+            //    Console.WriteLine(Bank.Name);
+
+            //}
             //foreach (var bilobank2 in biloBank.Banks)
             //{
             //    Console.WriteLine(bilobank2.Name);
