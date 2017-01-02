@@ -14,7 +14,7 @@ namespace BankParse
             var ProviderBilo = new ProviderJsonBilo();
             ProviderBilo.GetReadAllLines();
 
-            var Provider = new Provider();
+            var Provider = new ProviderTxtBank();
             var GetReadAllLines = Provider.GetReadAllLines();
 
             var rootBank = new RootBank();

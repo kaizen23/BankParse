@@ -8,7 +8,7 @@ using System.Text;
 
 namespace BankParse
 {
-    class Provider
+    class ProviderTxtBank
     {
         private string readLine;
 
@@ -40,19 +40,30 @@ namespace BankParse
         public RootBank SelectNameSortCode(List<string> AllLines)
         {
             var rootBank = new RootBank();
-            rootBank.Banks = (from c in (
-                         from item in AllLines
-                         let columns = item.Split('\t')
-                         select new Bank
-                         {
-                                SortCodes = columns[3].Trim().PadRight(4, '0'),
-                                Name = columns[1].Trim()
-    
-                         }
-                             )          
-                        select c).ToList();
+            //rootBank.Banks = (
+            //             from item in AllLines
+            //             let columns = item.Split('\t')
+            //             select new Bank
+            //             {
+            //                 SortCodes = columns[3].Trim().PadRight(4, '0'),
+            //                 Name = columns[1].Trim()
 
-            rootBank.Banks = rootBank.Banks.Where(c => !c.Name.Contains("likw"))
+            //             }
+            //                 )
+            //                 ).ToList();
+
+          
+
+            rootBank.Banks = AllLines.Select(line =>
+                                        {
+                                            var columns = line.Split('\t');
+                                            return new Bank
+                                                {
+                                                    SortCodes = columns[3].Trim().PadRight(4, '0'),
+                                                    Name = columns[1].Trim()
+                                                };
+                                         })
+                                           .Where(c => !c.Name.Contains("likw"))
                                            .Where(c => !c.Name.Contains("upadł"))
                                            .GroupBy(bank => bank.SortCodes)
                                            .Select(g => g.First())

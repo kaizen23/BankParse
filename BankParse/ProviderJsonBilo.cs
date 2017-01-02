@@ -19,9 +19,9 @@ namespace BankParse
                     JsonSerializer serializer = new JsonSerializer();
                     RootBank banks = (RootBank)serializer.Deserialize(file, typeof(RootBank));
 
-                    banks.Banks = banks.Banks.Select(x => { x.Name = x.Name.Trim(); return x; }).ToList();
-                    banks.Banks = banks.Banks.Select(x => { x.SortCodes = x.SortCodes.Trim(); return x; }).ToList();
-
+                banks.Banks = banks.Banks.Select(x => { x.Name = x.Name.Trim(); return x; })
+                                         .Select(x => { x.SortCodes = x.SortCodes.Trim(); return x; })
+                                         .ToList();
                 return banks;
                 }
            
