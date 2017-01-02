@@ -60,7 +60,7 @@ namespace BankParse
                                             return new Bank
                                                 {
                                                     SortCodes = columns[3].Trim().PadRight(4, '0'),
-                                                    Name = columns[1].Trim()
+                                                    Name = columns[1].Trim().Replace(" ","")
                                                 };
                                          })
                                            .Where(c => !c.Name.Contains("likw"))
