@@ -57,10 +57,22 @@ namespace BankParse
             rootBank.Banks = AllLines.Select(line =>
                                         {
                                             var columns = line.Split('\t');
+                                           
+                                            List<string> lista =  columns[3].Trim().Split(',').ToList();
+
+                                            StringBuilder builder = new StringBuilder();
+                                            foreach (string l in lista) 
+                                            {
+                                               builder.Append(l.Trim().PadRight(4,'0') + ", "); 
+                                                
+                                            }
+
+                                        
                                             return new Bank
-                                                {
-                                                    SortCodes = columns[3].Trim().PadRight(4, '0'),
-                                                    Name = columns[1].Trim().Replace(" ","")
+                                                {   
+                                                //SortCodes = columns[3].Trim().PadRight(4, '0'),
+                                                SortCodes = builder.ToString().Remove(builder.Length - 2),
+                                                Name = columns[1].Trim().Replace(" ","")
                                                 };
                                          })
                                            .Where(c => !c.Name.Contains("likw"))
@@ -68,6 +80,7 @@ namespace BankParse
                                            .GroupBy(bank => bank.SortCodes)
                                            .Select(g => g.First())
                                            .ToList();
+            
 
             return rootBank;
         }
