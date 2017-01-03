@@ -24,24 +24,26 @@ namespace BankParse
             biloBank = ProviderBilo.GetReadAllLines();
 
 
-            IEnumerable<Bank> except =biloBank.Banks.Except(rootBank.Banks, new RootBiloComparer());
+            IEnumerable<Bank> exceptBilo = biloBank.Banks.Except(rootBank.Banks, new RootBiloComparer());
             var x = 0;
-            foreach (var bank in except)
+            Console.WriteLine("*************************************************************\nBanki znajdujące się w pliku json, a nie ma ich na stronie www:\n");
+            foreach (var bank in exceptBilo)
             {
                 Console.WriteLine(bank.Name + "," + bank.SortCodes);
                 x++;
             }
-            Console.WriteLine(x);
+            Console.WriteLine("\nRóżnica równa: {0}\n\n*************************************************************\n", x);
 
 
-            IEnumerable<Bank> except2 = rootBank.Banks.Except(biloBank.Banks, new RootBiloComparer());
+            IEnumerable<Bank> exceptBank = rootBank.Banks.Except(biloBank.Banks, new RootBiloComparer());
             var i = 0;
-            foreach (var bank in except2)
+            Console.WriteLine("*************************************************************\nBanki znajdujące się na stronie www, a nie ma ich w pliku json:\n");
+            foreach (var bank in exceptBank)
             {
                 i++;
                 Console.WriteLine(bank.Name + "," + bank.SortCodes);
             }
-            Console.WriteLine(i);
+            Console.WriteLine("\nRóżnica równa: {0}\n\n*************************************************************\n", i);
 
             Console.ReadKey();                         
         }

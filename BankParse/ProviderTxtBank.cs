@@ -10,11 +10,13 @@ namespace BankParse
 {
     class ProviderTxtBank
     {
+
         private string readLine;
 
         public List<String> GetReadAllLines()
         {
-            var url = "http://www.nbp.pl/banki_w_polsce/ewidencja/dz_bank_jorg.txt";
+            //var url = "http://www.nbp.pl/banki_w_polsce/ewidencja/dz_bank_jorg.txt";
+            var url = "dz_bank_jorg.txt";
             var client = new WebClient();
             Encoding encoding = Encoding.GetEncoding("ibm852");
 
@@ -22,11 +24,11 @@ namespace BankParse
 
             using (var stream = client.OpenRead(url))
             {
-                using (var reader = new StreamReader(stream,encoding))
+                using (var reader = new StreamReader(stream, encoding))
                 {
 
-                    while ((( readLine = reader.ReadLine())) != null)
-                    
+                    while (((readLine = reader.ReadLine())) != null)
+
                     {
                         list.Add(readLine);
                     }
@@ -36,52 +38,33 @@ namespace BankParse
             return list;
         }
 
-
         public RootBank SelectNameSortCode(List<string> AllLines)
         {
             var rootBank = new RootBank();
-            //rootBank.Banks = (
-            //             from item in AllLines
-            //             let columns = item.Split('\t')
-            //             select new Bank
-            //             {
-            //                 SortCodes = columns[3].Trim().PadRight(4, '0'),
-            //                 Name = columns[1].Trim()
-
-            //             }
-            //                 )
-            //                 ).ToList();
-
-          
 
             rootBank.Banks = AllLines.Select(line =>
-                                        {
-                                            var columns = line.Split('\t');
-                                           
-                                            List<string> lista =  columns[3].Trim().Split(',').ToList();
+            {
+                var columns = line.Split('\t');
 
-                                            StringBuilder builder = new StringBuilder();
-                                            foreach (string l in lista) 
-                                            {
-                                               builder.Append(l.Trim().PadRight(4,'0') + ", "); 
-                                                
-                                            }
+                List<string> lista = new List<string>();
+                lista = columns[3].Trim().TrimEnd(',').Split(',').ToList();
 
-                                        
-                                            return new Bank
-                                                {   
-                                                //SortCodes = columns[3].Trim().PadRight(4, '0'),
-                                                SortCodes = builder.ToString().Remove(builder.Length - 2),
-                                                Name = columns[1].Trim().Replace(" ","")
-                                                };
-                                         })
+                StringBuilder builder = new StringBuilder();
+                foreach (string l in lista)
+                {
+                    builder.Append(l.Trim().PadRight(4, '0') + ", ");
+                }
+                return new Bank
+                {
+                    SortCodes = builder.ToString().Remove(builder.Length - 2),
+                    Name = columns[1].Trim().Replace(" ", "")
+                };
+            })
                                            .Where(c => !c.Name.Contains("likw"))
                                            .Where(c => !c.Name.Contains("upadł"))
-                                           .GroupBy(bank => bank.SortCodes)
+                                           .GroupBy(bank => new { bank.Name, bank.SortCodes })
                                            .Select(g => g.First())
                                            .ToList();
-            
-
             return rootBank;
         }
     }
