@@ -5,18 +5,14 @@ using System.Linq;
 using System.Net;
 using System.Text;
 
-
 namespace BankParse
 {
-    class ProviderTxtBank
+    public class ProviderTxtBank
     {
-
         private string readLine;
-
         public List<String> GetReadAllLines()
         {
-            //var url = "http://www.nbp.pl/banki_w_polsce/ewidencja/dz_bank_jorg.txt";
-            var url = "dz_bank_jorg.txt";
+            var url = "http://www.nbp.pl/banki_w_polsce/ewidencja/dz_bank_jorg.txt";
             var client = new WebClient();
             Encoding encoding = Encoding.GetEncoding("ibm852");
 
@@ -26,15 +22,12 @@ namespace BankParse
             {
                 using (var reader = new StreamReader(stream, encoding))
                 {
-
                     while (((readLine = reader.ReadLine())) != null)
-
                     {
                         list.Add(readLine);
                     }
                 }
             }
-
             return list;
         }
 
@@ -45,27 +38,40 @@ namespace BankParse
             rootBank.Banks = AllLines.Select(line =>
             {
                 var columns = line.Split('\t');
+                var listSortCode = SplitSortCodes(columns[3]);
 
-                List<string> lista = new List<string>();
-                lista = columns[3].Trim().TrimEnd(',').Split(',').ToList();
-
-                StringBuilder builder = new StringBuilder();
-                foreach (string l in lista)
-                {
-                    builder.Append(l.Trim().PadRight(4, '0') + ", ");
-                }
                 return new Bank
                 {
-                    SortCodes = builder.ToString().Remove(builder.Length - 2),
-                    Name = columns[1].Trim().Replace(" ", "")
+                    SortCodes = GetSortCodeFromListSortCode(listSortCode),
+                    Name = GetNamesFromColumns(columns)
                 };
             })
-                                           .Where(c => !c.Name.Contains("likw"))
-                                           .Where(c => !c.Name.Contains("upadł"))
-                                           .GroupBy(bank => new { bank.Name, bank.SortCodes })
-                                           .Select(g => g.First())
-                                           .ToList();
+                                       .Where(b => !b.Name.Contains("upad") && !b.Name.Contains("likw"))
+                                       .GroupBy(bank => new { bank.Name, bank.SortCodes })
+                                       .Select(b => b.First())
+                                       .ToList();
             return rootBank;
+        }
+
+        private static string GetNamesFromColumns(string[] columns)
+        {
+            return columns[1].Trim().Replace("  ", " ");
+        }
+        private List<string> SplitSortCodes( string SortCode)
+        {
+            List<string> list = new List<string>();
+            list = SortCode.Trim().TrimEnd(',').Split(',').ToList();
+     
+            return list;
+        }
+        private string GetSortCodeFromListSortCode(List<string> list)
+        {
+            StringBuilder builder = new StringBuilder();
+            foreach (string s in list)
+            {
+                builder.Append(s.Trim().PadRight(4, '0') + ", ");
+            }
+            return builder.ToString().Remove(builder.Length - 2);
         }
     }
 }
